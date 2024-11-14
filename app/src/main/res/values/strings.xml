@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">QuizApp</string>
-    <string name="rate">Rate</string>
-    <string name="share">Share</string>
+    <string name="rate">Đánh giá</string>
+    <string name="share">Chia sẻ</string>
     <string name="privacy">Privacy</string>
+    <string name="logout">Đăng xuất</string>
     <string name="name_category">Nhập tên chủ đề</string>
     <string name="name_subcategory">Nhập lĩnh vực</string>
     <string name="name_upload">Tải lên</string>

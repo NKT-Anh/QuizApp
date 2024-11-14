@@ -24,6 +24,7 @@ import com.example.quizapp.Adapter.CategoryAdaper;
 import com.example.quizapp.Models.CategoryModel;
 import com.example.quizapp.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     FirebaseDatabase database;
+    FirebaseAuth auth;
     CategoryAdaper adapter;
     ArrayList<CategoryModel> list;
     Dialog loadingDialog;
@@ -50,12 +52,19 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         database = FirebaseDatabase.getInstance();
+        auth = FirebaseAuth.getInstance();
         list = new ArrayList<>();
 
         loadingDialog = new Dialog(this);
         loadingDialog.setContentView(R.layout.loading_dialog);
         loadingDialog.setCancelable(true);
         loadingDialog.show();
+
+        if (auth.getCurrentUser() == null) {
+            Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         binding.rvCategory.setLayoutManager(layoutManager);
@@ -129,6 +138,13 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("link")));
                     drawerLayout.closeDrawer(GravityCompat.START);
 
+                }
+                else if(item.getItemId() == R.id.logout){
+                    FirebaseAuth.getInstance().signOut();
+                    Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+                    startActivity(intent);
+                    finish();
+                    return true;
                 }
 
                 return false;

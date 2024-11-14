@@ -15,4 +15,9 @@
         android:title="@string/privacy"
         android:icon="@drawable/ic_share"
         />
+    <item
+        android:id="@+id/logout"
+        android:title="@string/logout"
+        android:icon="@drawable/ic_logout"
+        />
 </menu>
