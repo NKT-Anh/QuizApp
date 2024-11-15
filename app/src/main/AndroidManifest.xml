@@ -13,8 +13,24 @@
         android:theme="@style/Theme.QuizApp"
         tools:targetApi="31">
         <activity
+            android:name=".AdminQuestionsActivity"
+            android:exported="false" />
+        <activity
             android:name=".AdminMainActivity"
             android:exported="false" />
+        <activity
+            android:name=".AdminSubCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UploadCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UploadQuestionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UploadSubCategoryActivity"
+            android:exported="false" />
+
         <activity
             android:name=".SignUpActivity"
             android:exported="false" />

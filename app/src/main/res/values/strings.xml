@@ -17,4 +17,7 @@
     <string name="UploadQuestion">Hoàn thành</string>
     <string name="Complete">Hoàn thành</string>
     <string name="Next">Tiếp tục</string>
+
+    <string name="app_name_admin">Admin App</string>
+    <string name="Question">Câu hỏi</string>
 </resources>

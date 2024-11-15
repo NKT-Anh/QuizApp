@@ -11,57 +11,50 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.quizapp.Models.CategoryModel;
+import com.example.quizapp.AdminQuestionsActivity;
+import com.example.quizapp.Models.SubCategoryModel;
+import com.example.quizapp.QuestionsActivity;
 import com.example.quizapp.R;
-import com.example.quizapp.SubCategoryActivity;
-import com.example.quizapp.databinding.RvCategoryDesignBinding;
+import com.example.quizapp.databinding.RvSubcategoryDesignBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class CategoryAdaper extends  RecyclerView.Adapter<CategoryAdaper.ViewHoler> {
+public class AdminSubCategoryAdaper extends  RecyclerView.Adapter<AdminSubCategoryAdaper.ViewHoler> {
     Context context;
-    ArrayList<CategoryModel> list;
-    private  String categoryID;
+    ArrayList<SubCategoryModel> list;
+    private  String catId;
+    private  String subCatId;
 
-    public CategoryAdaper(Context context, ArrayList<CategoryModel> models) {
+    public AdminSubCategoryAdaper(Context context, ArrayList<SubCategoryModel> list, String catId) {
         this.context = context;
-        this.list = models;
+        this.list = list;
+        this.catId = catId;
     }
 
     @NonNull
     @Override
     public ViewHoler onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.rv_category_design,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.rv_subcategory_design,parent,false);
         return new ViewHoler(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHoler holder, int position) {
-            CategoryModel categoryModel = list.get(position);
-            holder.binding.categoryName.setText(categoryModel.getCatagoryName());
-                String imageUrl = categoryModel.getCatagoryImage();
-                if (imageUrl == null || imageUrl.isEmpty()) {
+            SubCategoryModel categoryModel = list.get(position);
+            holder.binding.subCategoryName.setText(categoryModel.getCatagoryName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, AdminQuestionsActivity.class);
+                intent.putExtra("catId",catId);
+                intent.putExtra("subCatId",categoryModel.getKey());
+                context.startActivity(intent);
+            }
+        });
 
-                    imageUrl = "android.resource://" + context.getPackageName() + "/" + R.drawable.logo;
-                }
-
-                Picasso.get()
-                        .load(imageUrl)
-                        .placeholder(R.drawable.logo)
-                        .into(holder.binding.categoryImage);
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(context, SubCategoryActivity.class);
-                        intent.putExtra("catId",categoryModel.getKey());
-                        intent.putExtra("name",categoryModel.getCatagoryName());
-                        context.startActivity(intent);
-                    }
-                });
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -71,7 +64,8 @@ public class CategoryAdaper extends  RecyclerView.Adapter<CategoryAdaper.ViewHol
                 builder.setMessage("Bạn có chắc là xóa câu hỏi không ?");
                 builder.setPositiveButton("Có",((dialogInterface, i) -> {
 
-                    FirebaseDatabase.getInstance().getReference().child("chuDe")
+                    FirebaseDatabase.getInstance().getReference().child("chuDe").child(catId)
+                            .child("linhVuc")
                             .child(categoryModel.getKey())
                             .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -95,7 +89,7 @@ public class CategoryAdaper extends  RecyclerView.Adapter<CategoryAdaper.ViewHol
             }
         });
 
-    }
+   }
 
     @Override
     public int getItemCount() {
@@ -103,12 +97,12 @@ public class CategoryAdaper extends  RecyclerView.Adapter<CategoryAdaper.ViewHol
     }
 
     public  class ViewHoler extends RecyclerView.ViewHolder {
-        RvCategoryDesignBinding binding;
+        RvSubcategoryDesignBinding binding;
 
         public ViewHoler(@NonNull View itemView) {
 
             super(itemView);
-            binding = RvCategoryDesignBinding.bind(itemView);
+            binding = RvSubcategoryDesignBinding.bind(itemView);
         }
     }
 

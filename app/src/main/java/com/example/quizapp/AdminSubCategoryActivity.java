@@ -8,12 +8,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.quizapp.Adapter.AdminCategoryAdaper;
-import com.example.quizapp.Models.CategoryModel;
-import com.example.quizapp.databinding.ActivityAdminMainBinding;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.quizapp.Adapter.AdminSubCategoryAdaper;
+import com.example.quizapp.Models.SubCategoryModel;
+import com.example.quizapp.databinding.ActivityAdminSubCategoryBinding;
+import com.example.quizapp.databinding.ActivitySubCategoryBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -22,24 +22,22 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 
-public class AdminMainActivity extends AppCompatActivity {
-
-
-
-    ActivityAdminMainBinding binding;
+public class AdminSubCategoryActivity extends AppCompatActivity {
+    ActivityAdminSubCategoryBinding binding;
     FirebaseDatabase database;
-    AdminCategoryAdaper adapter;
+    AdminSubCategoryAdaper adapter;
     FirebaseStorage storage;
-    ArrayList<CategoryModel> list;
+    ArrayList<SubCategoryModel> list;
     Dialog loadingDialog;
-
+    private String categoryID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityAdminMainBinding.inflate(getLayoutInflater());
+        binding = ActivityAdminSubCategoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         database = FirebaseDatabase.getInstance();
+        categoryID = getIntent().getStringExtra("catId");
         list = new ArrayList<>();
 
         loadingDialog = new Dialog(this);
@@ -47,19 +45,20 @@ public class AdminMainActivity extends AppCompatActivity {
         loadingDialog.setCancelable(true);
         loadingDialog.show();
 
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         binding.rvCategory.setLayoutManager(layoutManager);
-        adapter = new AdminCategoryAdaper(this, list);
+        adapter = new AdminSubCategoryAdaper(this, list,categoryID);
         binding.rvCategory.setAdapter(adapter);
 
 
-        database.getReference().child("chuDe").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("chuDe").child(categoryID)
+                .child("linhVuc").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     list.clear();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        CategoryModel model = dataSnapshot.getValue(CategoryModel.class);
+                        SubCategoryModel model = dataSnapshot.getValue(SubCategoryModel.class);
                         if (model != null && dataSnapshot.getKey() != null) {
                             model.setKey(dataSnapshot.getKey());
                             list.add(model);
@@ -68,11 +67,11 @@ public class AdminMainActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
                     loadingDialog.dismiss();
                     if (list.isEmpty()) {
-                        Toast.makeText(AdminMainActivity.this, "Hiện tại chưa có dữ liệu", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminSubCategoryActivity.this, "Không có dữ liệu về lĩnh vực", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     loadingDialog.dismiss();
-                    Toast.makeText(AdminMainActivity.this, "Hiện tại chưa có dữ liệu", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AdminSubCategoryActivity.this, "Hiện tại chưa có dữ liệu", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -80,24 +79,15 @@ public class AdminMainActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 loadingDialog.dismiss();
-                Toast.makeText(AdminMainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        binding.btnLogIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(AdminMainActivity.this, SignInActivity.class);
-                startActivity(intent);
-                finish();
+                Toast.makeText(AdminSubCategoryActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
         binding.uploadCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AdminMainActivity.this, UploadCategoryActivity.class);
+                Intent intent = new Intent(AdminSubCategoryActivity.this, UploadSubCategoryActivity.class);
+                intent.putExtra("catId",categoryID);
                 startActivity(intent);
             }
         });

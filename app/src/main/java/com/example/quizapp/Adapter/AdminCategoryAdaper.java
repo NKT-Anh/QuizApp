@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.quizapp.AdminSubCategoryActivity;
 import com.example.quizapp.Models.CategoryModel;
 import com.example.quizapp.R;
 import com.example.quizapp.SubCategoryActivity;
@@ -21,12 +22,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class CategoryAdaper extends  RecyclerView.Adapter<CategoryAdaper.ViewHoler> {
+public class AdminCategoryAdaper extends  RecyclerView.Adapter<AdminCategoryAdaper.ViewHoler> {
     Context context;
     ArrayList<CategoryModel> list;
     private  String categoryID;
 
-    public CategoryAdaper(Context context, ArrayList<CategoryModel> models) {
+    public AdminCategoryAdaper(Context context, ArrayList<CategoryModel> models) {
         this.context = context;
         this.list = models;
     }
@@ -46,55 +47,53 @@ public class CategoryAdaper extends  RecyclerView.Adapter<CategoryAdaper.ViewHol
                 String imageUrl = categoryModel.getCatagoryImage();
                 if (imageUrl == null || imageUrl.isEmpty()) {
 
-                    imageUrl = "android.resource://" + context.getPackageName() + "/" + R.drawable.logo;
+                    imageUrl = "android.resource://" + context.getPackageName() + "/" + R.drawable.admin_logo;
                 }
 
                 Picasso.get()
                         .load(imageUrl)
-                        .placeholder(R.drawable.logo)
+                        .placeholder(R.drawable.admin_logo)
                         .into(holder.binding.categoryImage);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(context, SubCategoryActivity.class);
+                        Intent intent = new Intent(context, AdminSubCategoryActivity.class);
                         intent.putExtra("catId",categoryModel.getKey());
-                        intent.putExtra("name",categoryModel.getCatagoryName());
                         context.startActivity(intent);
                     }
                 });
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
+                    holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View view) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("Xóa câu hỏi");
-                builder.setMessage("Bạn có chắc là xóa câu hỏi không ?");
-                builder.setPositiveButton("Có",((dialogInterface, i) -> {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                            builder.setTitle("Xóa câu hỏi");
+                            builder.setMessage("Bạn có chắc là xóa câu hỏi không ?");
+                            builder.setPositiveButton("Có",((dialogInterface, i) -> {
 
-                    FirebaseDatabase.getInstance().getReference().child("chuDe")
-                            .child(categoryModel.getKey())
-                            .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void unused) {
-                                    Toast.makeText(context,"Xóa thành công",Toast.LENGTH_SHORT).show();
-                                }
+                                FirebaseDatabase.getInstance().getReference().child("chuDe")
+                                        .child(categoryModel.getKey())
+                                        .removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                Toast.makeText(context,"Xóa thành công",Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                ;
+
+                            }));
+
+                            builder.setNegativeButton("Không",(dialogInterface, i) -> {
+
+                                dialogInterface.cancel();
                             });
-                    ;
 
-                }));
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
 
-                builder.setNegativeButton("Không",(dialogInterface, i) -> {
-
-                    dialogInterface.cancel();
-                });
-
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-
-                return true;
-            }
-        });
-
+                            return true;
+                        }
+                    });
     }
 
     @Override
