@@ -149,6 +149,14 @@ public class SignInActivity extends AppCompatActivity {
                         }
                     });
         }
+        binding.forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent  = new Intent(SignInActivity.this, ForgotActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
     }
 }

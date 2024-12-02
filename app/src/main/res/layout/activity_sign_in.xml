@@ -7,6 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".SignUpActivity">
 
+    <TextView
+        android:id="@+id/forgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:text="Quên mật khẩu?"
+        android:textColor="#4410BC"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/txtUserPassword"
+        app:layout_constraintTop_toBottomOf="@+id/txtUserPassword" />
+
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="220dp"
@@ -60,6 +72,7 @@
         android:ems="10"
         android:hint="Nhập email"
         android:inputType="text"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView6"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
@@ -72,6 +85,7 @@
         android:ems="10"
         android:hint="********"
         android:inputType="text"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView9"
