@@ -25,6 +25,7 @@ import com.example.quizapp.Models.CategoryModel;
 import com.example.quizapp.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -122,31 +123,31 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                String shareBody = "Chia sẻ app cho mình nha" +"http://play.google.com/store/app/details/id="+ MainActivity.this.getPackageName();
-                if(item.getItemId()==R.id.Share) {
+                if (item.getItemId() == R.id.Room) {
+                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                    intent.putExtra("User UID", auth.getCurrentUser().getUid());
+                    startActivity(intent);
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                } else if (item.getItemId() == R.id.Share) {
+                    String shareBody = "Chia sẻ app cho mình nha" + "http://play.google.com/store/app/details/id=" + MainActivity.this.getPackageName();
                     Intent intent = new Intent(Intent.ACTION_SENDTO);
                     intent.setType("text/plain");
                     intent.putExtra(Intent.EXTRA_TEXT, shareBody);
                     startActivity(intent);
                     drawerLayout.closeDrawer(GravityCompat.START);
-
-                }
-                else if (item.getItemId() == R.id.rate) {
+                } else if (item.getItemId() == R.id.rate) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/app/details/id=" + MainActivity.this.getPackageName())));
                     drawerLayout.closeDrawer(GravityCompat.START);
                 } else if (item.getItemId() == R.id.privacy) {
-                    startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("link")));
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("link")));
                     drawerLayout.closeDrawer(GravityCompat.START);
-
-                }
-                else if(item.getItemId() == R.id.logout){
+                } else if (item.getItemId() == R.id.logout) {
                     FirebaseAuth.getInstance().signOut();
                     Intent intent = new Intent(MainActivity.this, SignInActivity.class);
                     startActivity(intent);
                     finish();
                     return true;
                 }
-
                 return false;
             }
         });

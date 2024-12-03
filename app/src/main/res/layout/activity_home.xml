@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main"
+    android:gravity="top|center_horizontal"
+    android:orientation="vertical"
+    tools:context=".HomeActivity">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp">
+
+        <ImageView
+            android:id="@+id/signout"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/signout"
+            android:scaleType="centerInside"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="Welcome!"
+            android:layout_toStartOf="@+id/signout"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        android:padding="20dp"
+        android:gravity="center_horizontal|top"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="UselessParent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                tools:ignore="ScrollViewSize">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:background="@drawable/grey_background"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="30dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:textSize="22sp"
+                        android:padding="10dp"
+                        android:textColor="@color/main"
+                        android:text="Nhập mã phòng:"
+                        android:layout_marginBottom="10dp"
+                        android:textStyle="bold"
+                        tools:ignore="RtlHardcoded" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/startQuiz"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:padding="10dp"
+                            android:background="@drawable/button_background"
+                            android:textColor="@color/white"
+                            android:textAllCaps="false"
+                            android:text="Bắt đầu"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:layout_marginStart="10dp"
+                            android:layout_alignParentRight="true"
+                            tools:ignore="RtlHardcoded" />
+
+                        <EditText
+                            android:id="@+id/start_quiz_id"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_toLeftOf="@+id/startQuiz"
+                            android:background="@drawable/white_edittext"
+                            android:hint="Mã phòng"
+                            android:imeOptions="actionDone"
+                            android:inputType="numberSigned"
+                            android:minHeight="48dp"
+                            android:padding="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            tools:ignore="Autofill,RtlHardcoded" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/solvedQuizzes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:background="@drawable/grey_background"
+                    android:gravity="center"
+                    android:layout_marginBottom="20dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/arrow"
+                        android:scaleType="centerInside"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        tools:ignore="ContentDescription,RtlHardcoded" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="left"
+                        android:padding="10dp"
+                        android:text="Xem lại bài kiểm tra"
+                        android:textColor="@color/main"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        tools:ignore="RtlHardcoded" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:background="@drawable/grey_background"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:layout_width="170dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:padding="10dp"
+                        android:textColor="@color/main"
+                        android:text="Tổng số câu hỏi"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/total_questions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:padding="10dp"
+                        android:textColor="@color/white"
+                        android:text="000"
+                        android:textStyle="bold"
+                        android:background="@drawable/circle"
+                        tools:ignore="HardcodedText" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:background="@drawable/grey_background"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:layout_width="170dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:padding="10dp"
+                        android:textColor="@color/main"
+                        android:text="Tổng câu trả lời đúng"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/total_points"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:padding="10dp"
+                        android:textColor="@color/white"
+                        android:text="000"
+                        android:textStyle="bold"
+                        android:background="@drawable/circle"
+                        tools:ignore="HardcodedText" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:background="@drawable/grey_background"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left"
+                        android:textSize="22sp"
+                        android:padding="10dp"
+                        android:textColor="@color/main"
+                        android:text="Nhập tên bài kiểm tra"
+                        android:layout_marginBottom="10dp"
+                        android:textStyle="bold"
+                        tools:ignore="RtlHardcoded" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/createQuiz"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:padding="10dp"
+                            android:background="@drawable/button_background"
+                            android:textColor="@color/white"
+                            android:textAllCaps="false"
+                            android:text="Tạo"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:layout_marginLeft="10dp"
+                            android:layout_alignParentRight="true"
+                            tools:ignore="RtlHardcoded" />
+
+                        <EditText
+                            android:id="@+id/quiz_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_toLeftOf="@+id/createQuiz"
+                            android:background="@drawable/white_edittext"
+                            android:hint="Tên chủ đề"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
+                            android:minHeight="48dp"
+                            android:padding="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            tools:ignore="Autofill,RtlHardcoded" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/your_quizzes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:background="@drawable/grey_background"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/arrow"
+                        android:scaleType="centerInside"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        tools:ignore="ContentDescription,RtlHardcoded" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:gravity="left"
+                        android:padding="10dp"
+                        android:text="Xem bài kiểm tra đã tạo"
+                        android:textColor="@color/main"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        tools:ignore="RtlHardcoded" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>
