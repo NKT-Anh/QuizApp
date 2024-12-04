@@ -8,12 +8,12 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import androidx.activity.EdgeToEdge;
+import com.facebook.ads.AdView;
+import com.facebook.ads.AdSize;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
 import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.example.quizapp.Adapter.CategoryAdaper;
 import com.example.quizapp.Models.CategoryModel;
 import com.example.quizapp.databinding.ActivityMainBinding;
+
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
     ActivityMainBinding binding;
     FirebaseDatabase database;
     FirebaseAuth auth;
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     ImageView menu;
     View header;
 
+    AdView adView;
+    LinearLayout adContainer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         auth = FirebaseAuth.getInstance();
         list = new ArrayList<>();
+
+        AdView adView = new AdView(this, "IMG_16_9_APP_INSTALL#YOUR_PLACEMENT_ID", AdSize.BANNER_HEIGHT_50);
+        binding.bannerContainer.addView(adView);
+        adView.loadAd();
 
         loadingDialog = new Dialog(this);
         loadingDialog.setContentView(R.layout.loading_dialog);
