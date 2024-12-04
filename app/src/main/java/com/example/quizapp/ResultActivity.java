@@ -57,7 +57,7 @@ public class ResultActivity extends AppCompatActivity {
                     int num = Integer.parseInt(qRef.child("Total Questions").getValue().toString());
                     data = new Question[num];
                     int correctAns = 0;
-                    int answeredQuestions = 0; // Số câu đã làm
+                    int answeredQuestions = 0;
                     double totalScore = 0.0;   // Tổng điểm
                     for (int i = 0; i < num; i++) {
                         DataSnapshot qRef2 = qRef.child("Questions").child(String.valueOf(i));
