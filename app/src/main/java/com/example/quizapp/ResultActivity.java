@@ -57,7 +57,9 @@ public class ResultActivity extends AppCompatActivity {
                     int num = Integer.parseInt(qRef.child("Total Questions").getValue().toString());
                     data = new Question[num];
                     int correctAns = 0;
-                    for (int i=0;i<num;i++) {
+                    int answeredQuestions = 0; // Số câu đã làm
+                    double totalScore = 0.0;   // Tổng điểm
+                    for (int i = 0; i < num; i++) {
                         DataSnapshot qRef2 = qRef.child("Questions").child(String.valueOf(i));
                         Question question = new Question();
                         question.setQuestion(qRef2.child("Question").getValue().toString());
@@ -65,14 +67,24 @@ public class ResultActivity extends AppCompatActivity {
                         question.setOption2(qRef2.child("Option 2").getValue().toString());
                         question.setOption3(qRef2.child("Option 3").getValue().toString());
                         question.setOption4(qRef2.child("Option 4").getValue().toString());
-                        question.setSelectedAnswer(Integer.parseInt(
-                                ansRef.child(String.valueOf((i+1))).getValue().toString()));
-                        int ans = Integer.parseInt(qRef2.child("Ans").getValue().toString());
-                        if (ans==question.getSelectedAnswer()) correctAns++;
-                        question.setCorrectAnswer(ans);
+
+                        int selectedAnswer = Integer.parseInt(
+                                ansRef.child(String.valueOf((i + 1))).getValue().toString());
+                        question.setSelectedAnswer(selectedAnswer);
+
+                        // Kiểm tra nếu đã trả lời câu hỏi
+                        if (selectedAnswer != 0) {
+                            answeredQuestions++; // Tăng số câu đã làm
+                            int correctAnswer = Integer.parseInt(qRef2.child("Ans").getValue().toString());
+                            if (correctAnswer == selectedAnswer) {
+                                correctAns++;
+                                totalScore += (10.0 / num); // Điểm mỗi câu đúng dựa trên tổng điểm tối đa
+                            }
+                            question.setCorrectAnswer(correctAnswer);
+                        }
                         data[i] = question;
                     }
-                    total.setText("Hoàn thành "+correctAns+"/"+data.length);
+                    total.setText("Hoàn thành: " + correctAns + "/" + answeredQuestions + "\n Điểm: " + String.format("%.2f", totalScore) + "/10");
                     ListAdapter listAdapter = new ListAdapter(data);
                     listview.setAdapter(listAdapter);
                 } else {

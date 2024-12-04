@@ -43,7 +43,7 @@
                 android:padding="5dp"
                 android:gravity="center"
                 android:textColor="@color/main"
-                android:text="Tổng 20/20"
+                android:text="Correct: 0/0 - Score: 0/10"
                 android:textStyle="bold"/>
 
         </LinearLayout>
