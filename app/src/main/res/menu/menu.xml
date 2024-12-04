@@ -3,7 +3,7 @@
     <item
         android:id="@+id/Room"
         android:title="@string/room"
-        android:icon="@drawable/ic_share"
+        android:icon="@drawable/ic_class"
         />
     <item
         android:id="@+id/Share"

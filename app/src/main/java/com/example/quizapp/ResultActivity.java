@@ -72,7 +72,7 @@ public class ResultActivity extends AppCompatActivity {
                         question.setCorrectAnswer(ans);
                         data[i] = question;
                     }
-                    total.setText("Total "+correctAns+"/"+data.length);
+                    total.setText("Hoàn thành "+correctAns+"/"+data.length);
                     ListAdapter listAdapter = new ListAdapter(data);
                     listview.setAdapter(listAdapter);
                 } else {
@@ -155,11 +155,11 @@ public class ResultActivity extends AppCompatActivity {
             if (data[i].getSelectedAnswer()==data[i].getCorrectAnswer()) {
                 result.setBackgroundResource(R.drawable.green_background);
                 result.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.green_dark));
-                result.setText("Correct Answer");
+                result.setText("Đúng nè");
             } else {
                 result.setBackgroundResource(R.drawable.red_background);
                 result.setTextColor(ContextCompat.getColor(ResultActivity.this, R.color.red_dark));
-                result.setText("Wrong Answer");
+                result.setText("Sai nè");
 
                 switch (data[i].getCorrectAnswer()) {
                     case 1:

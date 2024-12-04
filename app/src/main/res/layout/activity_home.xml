@@ -4,11 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main"
     android:gravity="top|center_horizontal"
     android:orientation="vertical"
-    tools:context=".HomeActivity">
 
+    tools:context=".HomeActivity">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/back_gd"
+        android:gravity="center_horizontal|top"
+        android:orientation="vertical">
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,9 +21,9 @@
 
         <ImageView
             android:id="@+id/signout"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/signout"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/ic_home"
             android:scaleType="centerInside"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
@@ -36,11 +41,11 @@
             android:layout_toStartOf="@+id/signout"/>
 
     </RelativeLayout>
-
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background"
+        android:background="@drawable/back_g"
         android:padding="20dp"
         android:gravity="center_horizontal|top"
         android:orientation="vertical">
@@ -67,18 +72,6 @@
                     android:layout_marginBottom="20dp"
                     android:layout_marginTop="30dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="left"
-                        android:textSize="22sp"
-                        android:padding="10dp"
-                        android:textColor="@color/main"
-                        android:text="Nhập mã phòng:"
-                        android:layout_marginBottom="10dp"
-                        android:textStyle="bold"
-                        tools:ignore="RtlHardcoded" />
-
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -87,32 +80,35 @@
                             android:id="@+id/startQuiz"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="20sp"
-                            android:padding="10dp"
-                            android:background="@drawable/button_background"
-                            android:textColor="@color/white"
-                            android:textAllCaps="false"
-                            android:text="Bắt đầu"
-                            android:textStyle="bold"
-                            android:gravity="center"
-                            android:layout_marginStart="10dp"
                             android:layout_alignParentRight="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="2dp"
+                            android:background="@drawable/button_background"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Bắt đầu"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
                             tools:ignore="RtlHardcoded" />
 
                         <EditText
                             android:id="@+id/start_quiz_id"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
                             android:layout_marginBottom="10dp"
                             android:layout_toLeftOf="@+id/startQuiz"
                             android:background="@drawable/white_edittext"
-                            android:hint="Mã phòng"
+                            android:hint="Nhập mã phòng"
+                            android:textStyle="bold"
                             android:imeOptions="actionDone"
                             android:inputType="numberSigned"
                             android:minHeight="48dp"
-                            android:padding="10dp"
+                            android:padding="8dp"
                             android:textColor="@color/black"
-                            android:textSize="20sp"
+                            android:textSize="16sp"
                             tools:ignore="Autofill,RtlHardcoded" />
 
                     </RelativeLayout>
@@ -201,7 +197,7 @@
                         android:textSize="20sp"
                         android:padding="10dp"
                         android:textColor="@color/main"
-                        android:text="Tổng câu trả lời đúng"
+                        android:text="Câu trả lời đúng"
                         android:textStyle="bold"/>
 
                     <TextView
@@ -228,17 +224,6 @@
                     android:orientation="vertical"
                     android:layout_marginBottom="20dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="left"
-                        android:textSize="22sp"
-                        android:padding="10dp"
-                        android:textColor="@color/main"
-                        android:text="Nhập tên bài kiểm tra"
-                        android:layout_marginBottom="10dp"
-                        android:textStyle="bold"
-                        tools:ignore="RtlHardcoded" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -248,22 +233,24 @@
                             android:id="@+id/createQuiz"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="20sp"
-                            android:padding="10dp"
-                            android:background="@drawable/button_background"
-                            android:textColor="@color/white"
-                            android:textAllCaps="false"
-                            android:text="Tạo"
-                            android:textStyle="bold"
-                            android:gravity="center"
-                            android:layout_marginLeft="10dp"
                             android:layout_alignParentRight="true"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="2dp"
+                            android:background="@drawable/button_background"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Tạo"
+                            android:textAllCaps="false"
+                            android:textColor="@color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
                             tools:ignore="RtlHardcoded" />
 
                         <EditText
                             android:id="@+id/quiz_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
                             android:layout_marginBottom="10dp"
                             android:layout_toLeftOf="@+id/createQuiz"
                             android:background="@drawable/white_edittext"
@@ -285,7 +272,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:background="@drawable/grey_background"
+                    android:background="@drawable/btn_click_color"
                     android:gravity="center">
 
                     <ImageView
@@ -303,7 +290,7 @@
                         android:layout_centerVertical="true"
                         android:gravity="left"
                         android:padding="10dp"
-                        android:text="Xem bài kiểm tra đã tạo"
+                        android:text="Danh sách tham gia"
                         android:textColor="@color/main"
                         android:textSize="22sp"
                         android:textStyle="bold"

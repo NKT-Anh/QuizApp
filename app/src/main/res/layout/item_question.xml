@@ -9,9 +9,10 @@
         android:id="@+id/question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/main1"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="10dp" />
+        android:textStyle="bold" />
 
     <RadioGroup
         android:id="@+id/options_group"
@@ -22,22 +23,26 @@
         <RadioButton
             android:id="@+id/option1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/black" />
 
         <RadioButton
             android:id="@+id/option2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/black" />
 
         <RadioButton
             android:id="@+id/option3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/black" />
 
         <RadioButton
             android:id="@+id/option4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/black" />
     </RadioGroup>
 
     <LinearLayout

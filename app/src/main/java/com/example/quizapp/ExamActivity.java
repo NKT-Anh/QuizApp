@@ -2,6 +2,7 @@ package com.example.quizapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,11 @@ public class ExamActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private Button nextButton, previousButton, submitButton;
     private int currentItem = 0;
+
+    private TextView timerTextView;
+    private CountDownTimer countDownTimer;
+    private long timeRemaining = 900000;
+    private boolean isTimerRunning = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +104,23 @@ public class ExamActivity extends AppCompatActivity {
         };
         database.addValueEventListener(listener);
 
+        timerTextView = findViewById(R.id.timer);
+
+        countDownTimer = new CountDownTimer(timeRemaining, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeRemaining = millisUntilFinished;
+                updateTimer();
+            }
+
+            @Override
+            public void onFinish() {
+                submitQuiz();
+            }
+        };
+
+        startTimer();
+
         nextButton.setOnClickListener(v -> {
             if (currentItem < data.length - 1) {
                 currentItem++;
@@ -139,6 +162,44 @@ public class ExamActivity extends AppCompatActivity {
             startActivity(i);
             finish();
         });
+    }
+
+    private void startTimer() {
+        if (!isTimerRunning) {
+            countDownTimer.start();
+            isTimerRunning = true;
+        }
+    }
+
+    private void updateTimer() {
+        int minutes = (int) (timeRemaining / 1000) / 60;
+        int seconds = (int) (timeRemaining / 1000) % 60;
+        String timeLeft = String.format("%02d:%02d", minutes, seconds);
+        timerTextView.setText(timeLeft);
+    }
+
+    private void submitQuiz() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Quizzes").child(quizID)
+                .child("Answers").child(uid);
+        int totalPoints = oldTotalPoints;
+        int points = 0;
+        for (int i = 0; i < data.length; i++) {
+            ref.child(String.valueOf((i + 1))).setValue(data[i].getSelectedAnswer());
+            if (data[i].getSelectedAnswer() == data[i].getCorrectAnswer()) {
+                totalPoints++;
+                points++;
+            }
+        }
+        ref.child("Points").setValue(points);
+        int totalQuestions = oldTotalQuestions + data.length;
+        FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("Total Points").setValue(totalPoints);
+        FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("Total Questions").setValue(totalQuestions);
+        FirebaseDatabase.getInstance().getReference().child("users").child(uid).child("Quizzes Solved").child(quizID).setValue("");
+
+        Intent i = new Intent(ExamActivity.this, ResultActivity.class);
+        i.putExtra("Quiz ID", quizID);
+        startActivity(i);
+        finish();
     }
 
     public class ListAdapter extends BaseAdapter {
