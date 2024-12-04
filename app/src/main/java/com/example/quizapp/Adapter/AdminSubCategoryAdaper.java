@@ -39,6 +39,7 @@ public class AdminSubCategoryAdaper extends  RecyclerView.Adapter<AdminSubCatego
 
         View view = LayoutInflater.from(context).inflate(R.layout.rv_subcategory_design,parent,false);
         return new ViewHoler(view);
+
     }
 
     @Override
