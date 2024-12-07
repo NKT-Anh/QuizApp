@@ -107,8 +107,10 @@ public class QuestionsActivity extends AppCompatActivity {
                                         intent.putExtra("correct",correct);
                                         intent.putExtra("wrong",wrong);
                                         intent.putExtra("total_questions",list.size());
+                                        intent.putExtra("catId", catId);
+                                        intent.putExtra("subCatId", subCatId);
                                         startActivity(intent);
-                                        finish();
+
                                         Toast.makeText(QuestionsActivity.this, "Ấn hoàn thành để kết thúc", Toast.LENGTH_SHORT).show();
                                         return;
 
@@ -128,6 +130,8 @@ public class QuestionsActivity extends AppCompatActivity {
                                     intent.putExtra("correct",correct);
                                     intent.putExtra("wrong",wrong);
                                     intent.putExtra("total_questions",list.size());
+                                    intent.putExtra("catId", catId);
+                                    intent.putExtra("subCatId", subCatId);
                                     startActivity(intent);
                                 }
                             });
@@ -176,8 +180,11 @@ public class QuestionsActivity extends AppCompatActivity {
         intent.putExtra("correct", correct);
         intent.putExtra("wrong", wrong);
         intent.putExtra("total_questions", list.size());
+
+        intent.putExtra("catId", catId);
+        intent.putExtra("subCatId", subCatId);
         startActivity(intent);
-        finish();
+
     }
 
     private void enableOption(boolean enable) {

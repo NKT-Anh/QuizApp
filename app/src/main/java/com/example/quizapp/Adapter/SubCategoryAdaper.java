@@ -16,6 +16,7 @@ import com.example.quizapp.QuestionsActivity;
 import com.example.quizapp.R;
 import com.example.quizapp.databinding.RvSubcategoryDesignBinding;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
@@ -42,8 +43,45 @@ public class SubCategoryAdaper extends  RecyclerView.Adapter<SubCategoryAdaper.V
 
     @Override
     public void onBindViewHolder(@NonNull ViewHoler holder, int position) {
-            SubCategoryModel categoryModel = list.get(position);
-            holder.binding.subCategoryName.setText(categoryModel.getCatagoryName());
+        SubCategoryModel categoryModel = list.get(position);
+        holder.binding.subCategoryName.setText(categoryModel.getCatagoryName());
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String userId = auth.getCurrentUser() != null ? auth.getCurrentUser().getUid() : null;
+
+        if (userId != null) { // Kiểm tra nếu có người dùng đăng nhập
+            // Lấy điểm từ Firebase Realtime Database
+            FirebaseDatabase.getInstance().getReference()
+                    .child("chuDe")  // Node chủ đề
+                    .child(catId)    // ID của category
+                    .child("linhVuc") // Node lĩnh vực
+                    .child(categoryModel.getKey())  // ID của sub-category
+                    .child("users")   // Node người dùng
+                    .child(userId)    // ID của người dùng
+                    .child("score")   // Điểm của người dùng
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            // Lấy điểm dạng float
+                            Float score = task.getResult().getValue(Float.class);
+                            if (score != null) {
+                                // Định dạng điểm với 2 chữ số sau dấu thập phân
+                                holder.binding.subCategoryScore.setText(String.format("%.2f", score));
+                                holder.binding.subCategoryScore.setVisibility(View.VISIBLE);  // Hiển thị điểm
+                            } else {
+                                holder.binding.subCategoryScore.setVisibility(View.GONE);  // Ẩn điểm nếu không có
+                            }
+                        } else {
+                            holder.binding.subCategoryScore.setVisibility(View.GONE);  // Ẩn điểm nếu không có
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        // Handle failure, e.g. log it or show a Toast
+                        Toast.makeText(context, "Lỗi khi lấy điểm", Toast.LENGTH_SHORT).show();
+                    });
+        } else {
+            holder.binding.subCategoryScore.setVisibility(View.GONE);  // Ẩn điểm nếu không có người dùng đăng nhập
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -2,17 +2,23 @@ package com.example.quizapp;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.quizapp.Adapter.AdminCategoryAdaper;
 import com.example.quizapp.Models.CategoryModel;
 import com.example.quizapp.databinding.ActivityAdminMainBinding;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,6 +39,11 @@ public class AdminMainActivity extends AppCompatActivity {
     ArrayList<CategoryModel> list;
     Dialog loadingDialog;
 
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    ImageView menu;
+    View header;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +60,7 @@ public class AdminMainActivity extends AppCompatActivity {
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         binding.rvCategory.setLayoutManager(layoutManager);
+
         adapter = new AdminCategoryAdaper(this, list);
         binding.rvCategory.setAdapter(adapter);
 
@@ -99,6 +111,38 @@ public class AdminMainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(AdminMainActivity.this, UploadCategoryActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        drawerLayout = findViewById(R.id.mainAdmin);
+        navigationView = findViewById(R.id.navigationViewadmin);
+        menu = findViewById(R.id.menuadmin);
+        header = navigationView.getHeaderView(0);
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(drawerLayout.isDrawerOpen(GravityCompat.START))
+                {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                }
+                else{
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.homeAdmin) {
+                    Intent intent = new Intent(AdminMainActivity.this, AdminMainActivity.class);
+                    startActivity(intent);
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                } else if (item.getItemId() == R.id.accountAdmin) {
+                    Intent intent = new Intent(AdminMainActivity.this, ListAccountActivity.class);
+                    startActivity(intent);
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                }
+                return false;
             }
         });
     }
